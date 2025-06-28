@@ -1,4 +1,5 @@
 <?php
+include 'system/session.php';
 include 'layout/header.php';
 ?>
 <div>

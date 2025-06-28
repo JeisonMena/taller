@@ -1,3 +1,39 @@
+<?php
+session_start();
+if(isset($_SESSION['user_id'])) {
+    header('Location: index.php');
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    include 'system/config.php';
+    $correo = $_POST['correo'] ?? '';
+    $clave = $_POST['clave'] ?? '';
+    $clave = hash('sha256', $clave);
+
+    // Validar los campos
+    if (empty($correo) || empty($clave)) {
+        $error = "Por favor, complete todos los campos.";
+    } else {
+
+        $consulta = "SELECT id, clave FROM user WHERE email = '$correo' LIMIT 1";
+        $resultado = mysqli_query($conn, $consulta);
+        if ($resultado && mysqli_num_rows($resultado) > 0) {
+            $usuario = mysqli_fetch_assoc($resultado);
+            // Verificar la clave
+            if ($usuario['clave'] === $clave) {
+                $_SESSION['user_id'] = $usuario['id'];
+                header('Location: index.php');
+                exit();
+            } else {
+                $error = "Clave incorrecta.";
+            }
+        } else {
+            $error = "Usuario no encontrado.";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="auto">
 
@@ -16,7 +52,7 @@
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <main class="form-signin w-100 m-auto">
-        <form>
+        <form method="post" action="">
             <div class="text-center">
                 <img class="mb-4" src="assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
             </div> 
@@ -28,6 +64,11 @@
                 <input name="clave" type="password" class="form-control" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword">Clave</label> </div>
             <div class="my-3">
+                <?php
+                if (isset($error)){ 
+                    echo $error;
+                }
+                ?>
                 <button class="btn btn-primary w-100 py-2" type="submit">Ingresar</button>
             </div>
             <div class="text-center">
