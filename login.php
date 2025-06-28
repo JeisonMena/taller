@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Astro v5.9.2">
-    <title>Signin Template · Bootstrap v5.3</title>
+    <title>Login</title>
     <script src="assets/js/color-modes.js"></script>
     <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta name="theme-color" content="#712cf9">
