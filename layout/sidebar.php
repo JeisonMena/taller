@@ -27,7 +27,7 @@
                             class="bi" aria-hidden="true">
                             <use xlink:href="#door-closed"></use>
                         </svg>
-                        Sign out
+                        Cerrar Sesion
                     </a> </li>
             </ul>
         </div>
